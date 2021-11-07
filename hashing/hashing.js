@@ -47,7 +47,7 @@ console.log(`Blockchain is valid: ${verifyChain(Blockchain)}`);
 // **********************************
 
 function blockHash(bl) {
-	return crypto.createHash("sha256").update(bl.data
+	return crypto.createHash("sha256").update(`${bl.index};${bl.prevHash};${JSON.stringify(bl.data)};${bl.timestamp}`
 	).digest("hex");
 }
 
@@ -76,6 +76,7 @@ function verifyChain(Blockchain){
 		if (verifyBlock(block)){
 			console.log(`Block ${block.index} is Valid !`);
 			if (block.index == 0){
+				hash = block.hash;
 				console.log('Genesis block has no link');
 				
 			}
