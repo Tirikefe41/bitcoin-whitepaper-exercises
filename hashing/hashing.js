@@ -29,14 +29,14 @@ Blockchain.blocks.push({
 
 // TODO: insert each line into blockchain
 for (let line of poem){
-	var currentBlock = createBlock(line, Blockchain.blocks)
-	Blockchain.blocks.push(currentBlock)
+	Blockchain.blocks.push(createBlock(line))
 }
+
 // Check verifyChain.
 // Blockchain.blocks.push({
 // 	index: 9,
-// 	hash: "000000",
-// 	data: "",
+// 	hash: "27842478274928402842974927jfsbkf82472",
+// 	data: "random data",
 // 	timestamp: Date.now(),
 // });
 
@@ -51,25 +51,24 @@ function blockHash(bl) {
 	).digest("hex");
 }
 
-function createBlock(line, blocks){
+function createBlock(line){
 
-	var prevBlock = blocks[blocks.length-1];
-
-	var tempBlock ={
-		index: prevBlock.index + 1,
-		prevHash: prevBlock.hash,
+	let block ={
+		index: Blockchain.blocks.length,
+		prevHash: Blockchain.blocks[Blockchain.blocks.length-1].hash,
 		data: line,
 		timestamp: Date.now()
 	}
-	var hash = blockHash(tempBlock);
-	tempBlock.hash = hash;
+	var hash = blockHash(block);
+	block.hash = hash;
 	
-	return tempBlock
+	return block
 
 }
 
 function verifyChain(Blockchain){
-	let hash = '000000'
+	let hash = '1s5bk46b4kh6l4j6'
+
 	for (let block of Blockchain.blocks){
 
 		console.log(block)		
@@ -101,15 +100,14 @@ function verifyChain(Blockchain){
 function verifyBlock(block){
 
 	var {index, prevHash, data, hash} = block
-	// console.log('data is')
-	// console.log(data)
 	var reHash = blockHash(block);
 
 	//verify the genesis block separately.
-	if (index == 0 && hash == '000000'){
+	if (index === 0 && hash == '000000'){
 		return true			
 	}
-	else if (data != null && prevHash != null && index > 0 && hash == reHash){
+	else if (data != null && prevHash != null && index > 0 && hash == reHash && typeof index === "number" &&
+	Number.isInteger(index)){
 		return true
 	}
 	else {
