@@ -29,7 +29,7 @@ Blockchain.blocks.push({
 
 // TODO: insert each line into blockchain
 for (let line of poem){
-	Blockchain.blocks.push(createBlock(line))
+	Blockchain.blocks.push(createBlock(line));
 }
 
 // Check verifyChain.
@@ -40,7 +40,7 @@ for (let line of poem){
 // 	timestamp: Date.now(),
 // });
 
-console.log(Blockchain)
+console.log(Blockchain);
 console.log(`Blockchain is valid: ${verifyChain(Blockchain)}`);
 
 
@@ -62,56 +62,56 @@ function createBlock(line){
 	var hash = blockHash(block);
 	block.hash = hash;
 	
-	return block
+	return block;
 
 }
 
 function verifyChain(Blockchain){
-	let hash = '1s5bk46b4kh6l4j6'
+	let hash = '1s5bk46b4kh6l4j6';
 
 	for (let block of Blockchain.blocks){
 
-		console.log(block)		
+		console.log(block);
 		
 		if (verifyBlock(block)){
-			console.log(`Block ${block.index} is Valid !`)
+			console.log(`Block ${block.index} is Valid !`);
 			if (block.index == 0){
-				console.log('Genesis block has no link')
+				console.log('Genesis block has no link');
 				
 			}
 			else if (block.index > 0 && hash == block.prevHash){
-				hash = block.hash
-				console.log(`Block link ${block.index -1} --> ${block.index} is valid!`)
+				hash = block.hash;
+				console.log(`Block link ${block.index -1} --> ${block.index} is valid!`);
 			}
 			else{
 				console.log('Hash sequence false')
-				return false
+				return false;
 			}
 		}
 		else{
 			console.log(`Block ${block.index} is invalid !`)
-			return false
+			return false;
 		}
 
 	}
-	return true
+	return true;
 }
 
 function verifyBlock(block){
 
-	var {index, prevHash, data, hash} = block
+	var {index, prevHash, data, hash} = block;
 	var reHash = blockHash(block);
 
 	//verify the genesis block separately.
 	if (index === 0 && hash == '000000'){
-		return true			
+		return true;		
 	}
 	else if (data != null && prevHash != null && index > 0 && hash == reHash && typeof index === "number" &&
 	Number.isInteger(index)){
-		return true
+		return true;
 	}
 	else {
-		return false
+		return false;
 	}
 
 }
